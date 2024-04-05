@@ -1,7 +1,9 @@
 from torch.utils.data import Dataset
+import numpy as np
 
 class CifarDataset(Dataset):
-    def __init__(self, labels, data, transform=None):
+
+    def __init__(self, labels, data: np.ndarray, transform=None):
         self.labels = labels
         self.data = data
         self.transform = transform
@@ -13,5 +15,5 @@ class CifarDataset(Dataset):
         data = self.data[idx]
         label = self.labels[idx]
         if self.transform:
-            data = self.transform(data)
+            data = self.transform(data[idx])
         return data, label

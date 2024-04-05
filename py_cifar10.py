@@ -1,4 +1,6 @@
 import numpy as np
+from class_cifar_dataset import CifarDataset
+from torchvision import transforms
 
 def unpickle(file):
     import pickle
@@ -18,6 +20,8 @@ for i in range(1, 5):
     dictionary = unpickle(file)
     train_labels += dictionary[b'labels']
     train_data = np.concatenate([train_data, dictionary[b'data']])
+    print(type(train_data))
+    print(type( dictionary[b'data']))
 
 
 file = f'cifar-10-batches-py/test_batch'
@@ -34,17 +38,17 @@ transform = transforms.Compose(
 
 batch_size = 4
 
-trainset = Cifar(root='./data', train=True,
-                                        download=True, transform=transform)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
-                                          shuffle=True, num_workers=2)
+trainset = CifarDataset(train_labels, train_data, transform)
 
-testset = torchvision.datasets.CIFAR10(root='./data', train=False,
-                                       download=True, transform=transform)
-testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-                                         shuffle=False, num_workers=2)
+#trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
+#                                          shuffle=True, num_workers=2)
+
+testset = CifarDataset(test_labels, test_data, transform)
+
+#testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
+#                                         shuffle=False, num_workers=2)
 
 classes = ('plane', 'car', 'bird', 'cat',
            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
-
+print(trainset.__getitem__(0)[0])
