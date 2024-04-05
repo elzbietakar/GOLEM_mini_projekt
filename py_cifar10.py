@@ -1,6 +1,7 @@
 import numpy as np
 from class_cifar_dataset import CifarDataset
 from torchvision import transforms
+from torch.utils.data import DataLoader
 
 def unpickle(file):
     import pickle
@@ -49,26 +50,14 @@ transform = transforms.Compose(
 batch_size = 4
 
 trainset = CifarDataset(train_labels, train_data, transform)
+train_dataloader = DataLoader(trainset, batch_size=128, shuffle=True)
 
-#trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
-#                                          shuffle=True, num_workers=2)
 
 testset = CifarDataset(test_labels, test_data, transform)
-
-#testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-#                                         shuffle=False, num_workers=2)
+test_dataloader = DataLoader(testset, batch_size=128, shuffle=True)
 
 classes = ('plane', 'car', 'bird', 'cat',
            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 print("typ")
-trainset.print_summary()
-one = trainset.get_one(0)
-one_data = one[0].reshape(3, 32, 32)
-one_data = one_data.transpose(1, 2, 0)
-print(one_data.ndim)
-print(type(one))
-print(type(one[0]))
-print(type(one[1]))
-data_one_transformed = transform(one_data)
-trainset.print_types(0)
+
 print(trainset.__getitem__(0)[0])
