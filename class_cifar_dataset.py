@@ -17,3 +17,13 @@ class CifarDataset(Dataset):
         if self.transform:
             data = self.transform(data[idx])
         return data, label
+
+    def print_types(self, idx):
+        print(type(self.data[idx]))
+        print(type(self.labels[idx]))
+
+    def get_one(self, idx):
+        return (self.data[idx], self.labels[idx])
+
+    def print_summary(self):
+        print(self.data.shape)
