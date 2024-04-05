@@ -15,7 +15,7 @@ class CifarDataset(Dataset):
         data = self.data[idx]
         label = self.labels[idx]
         if self.transform:
-            data = self.transform(data[idx])
+            data = self.transform(data)
         return data, label
 
     def print_types(self, idx):
