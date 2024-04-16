@@ -39,6 +39,15 @@ znet = ZuziaNet()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(znet.parameters(), lr=0.001, momentum=0.9)
 
+train_loss = []
+eval_loss = []
+
 for epoch in range(2):
-    train_epoch(znet, criterion, optimizer, trainloader, epoch)
-    eval(znet, criterion, testloader)
+    tloss = train_epoch(znet, criterion, optimizer, trainloader, epoch)
+    eloss = eval(znet, criterion, testloader)
+
+    train_loss.append(tloss)
+    eval_loss.append(eloss)
+
+print(train_loss)
+print(eval_loss)
