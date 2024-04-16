@@ -3,7 +3,9 @@ import torch
 def eval(model, criterion, loader):
     correct = 0
     total = 0
-    
+
+    model.eval()
+
     with torch.no_grad():
         for data in loader:
             images, labels = data
