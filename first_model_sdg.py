@@ -44,10 +44,11 @@ eval_loss = []
 
 for epoch in range(2):
     tloss = train_epoch(znet, criterion, optimizer, trainloader, epoch)
-    eloss = eval(znet, criterion, testloader)
+    eloss, classification_report = eval(znet, criterion, testloader)
 
     train_loss.append(tloss)
     eval_loss.append(eloss)
 
 print(train_loss)
 print(eval_loss)
+print(classification_report)
