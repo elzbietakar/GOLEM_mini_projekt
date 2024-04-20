@@ -1,10 +1,9 @@
 import torch
-from sklearn.metrics import classification_report
+from sklearn.metrics import recall_score, precision_score, f1_score, accuracy_score
+import numpy as np
 
 
 def eval(model, criterion, loader):
-    correct = 0
-    total = 0
     mean_loss = 0.0
     counter = 0
     y_true = []
@@ -20,11 +19,14 @@ def eval(model, criterion, loader):
             loss = criterion(outputs, labels)
             # the class with the highest energy is what we choose as prediction
             _, predicted = torch.max(outputs.data, 1)
-            total += labels.size(0)
-            correct += (predicted == labels).sum().item()
             mean_loss += loss.item()
-            y_true.extend(predicted.tolist())
-            y_pred.extend(labels.tolist())
+            y_true.extend(labels.tolist())
+            y_pred.extend(predicted.tolist())
             counter += 1
-    print(f'Accuracy of the network on the 10000 test images: {100 * correct // total} %')
-    return (mean_loss/counter, classification_report(y_true, y_pred))
+    accuracy = accuracy_score(y_true, y_pred)
+    print(f'Accuracy of the network on the 10000 test images: {accuracy*100:.2f} %')
+    recall = recall_score(y_true, y_pred, average='macro')
+    precision = precision_score(y_true, y_pred, average='macro', zero_division=np.nan)
+    f1 = f1_score(y_true, y_pred, average='macro')
+    classification_report = [accuracy, precision, recall, f1]
+    return (mean_loss/counter, classification_report)
