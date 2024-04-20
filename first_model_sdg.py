@@ -28,7 +28,7 @@ test_transform = transforms.Compose([
 
 
 # How many pictures are analyzed in one iteration
-batch_size = 64
+batch_size = 128
 
 # Defining datasets and dataloaders for train and test data
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
@@ -48,7 +48,6 @@ classes = ('plane', 'car', 'bird', 'cat',
 
 
 znet = ZuziaNet()
-#znet = Net()
 
 
 criterion = nn.CrossEntropyLoss()
@@ -59,7 +58,7 @@ eval_loss = []
 metrics = []
 epochs = []
 
-for epoch in range(4):
+for epoch in range(20):
     tloss = train_epoch(znet, criterion, optimizer, trainloader, epoch)
     eloss, classification_report = eval(znet, criterion, testloader)
 
@@ -73,8 +72,8 @@ print(eval_loss)
 print(metrics)
 
 # Wykres z dwoma zmiennymi jako punkty
-plt.scatter(epochs, train_loss, label='Training loss')
-plt.scatter(epochs, eval_loss, label='Evaluation loss')
+plt.plot(epochs, train_loss, label='Training loss')
+plt.plot(epochs, eval_loss, label='Evaluation loss')
 
 plt.title('Plot compares training and evaluation loss')
 plt.xlabel('Epochs')
@@ -82,5 +81,23 @@ plt.ylabel('Loss')
 
 plt.legend()
 
-plt.savefig('zuzianet_100epochsSGD_64b.png')
+plt.savefig('zuzianet_20epochsSGD_128b.png')
+plt.show()
+
+accuracy = [report[0] for report in metrics]
+precision = [report[1] for report in metrics]
+recall = [report[2] for report in metrics]
+f1 = [report[3] for report in metrics]
+plt.plot(epochs, accuracy, label='Accuracy')
+plt.plot(epochs, precision, label='Precision')
+plt.plot(epochs, recall, label='Recall')
+plt.plot(epochs, f1, label='F1 score')
+
+plt.title('Plot compares accuracy, precision, recall, f1 on every epoch')
+plt.xlabel('Epochs')
+plt.ylabel('Metrics')
+
+plt.legend()
+
+plt.savefig('zuzianet_20epochs_SGD_128b_metrics.png')
 plt.show()
