@@ -19,11 +19,11 @@ class ZuziaNet3(nn.Module):
         )
         self.block3 = nn.Sequential(
              nn.Conv2d(128, 256, kernel_size=3, bias=False),
-             nn.BatchNorm2d(128),
+             nn.BatchNorm2d(256),
              nn.ReLU(),
         )
         self.fc1 = nn.Linear(256 * 4 * 4, 512)
-        self.fc1 = nn.Linear(512, 10)
+        self.fc2 = nn.Linear(512, 10)
 
     def forward(self, x):
         x = self.block1(x)

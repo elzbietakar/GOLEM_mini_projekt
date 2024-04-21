@@ -28,14 +28,13 @@ class ZuziaNet(nn.Module):
              nn.ReLU(),
         )
         self.fc1 = nn.Linear(256 * 4 * 4, 512)
-        self.fc1 = nn.Linear(512, 10)
+        self.fc2 = nn.Linear(512, 10)
 
     def forward(self, x):
         x = self.block1(x)
         x = self.block2(x)
         x = self.block3(x)
         x = self.block4(x)
-        x = self.block5(x)
         x = torch.flatten(x, 1)
         x = self.fc1(x)
         x = self.fc2(x)
