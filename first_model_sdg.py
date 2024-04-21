@@ -3,21 +3,16 @@ import torchvision
 import torchvision.transforms as transforms
 from eval import eval
 import torch.nn as nn
-#import torch.nn.functional as F
 import torch.optim as optim
 from train_epoch import train_epoch
 from model1 import ZuziaNet
-#from NeuralNetworkModel import Net
+from model2 import ZuziaNet2
+from model3 import ZuziaNet3
 import matplotlib.pyplot as plt
 
-# Transform our data to tensor and tranform every value [0, 1]
-# transform = transforms.Compose(
-#     [transforms.ToTensor(),
-#      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 train_transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.RandomHorizontalFlip(p=0.4),
-        #transforms.ColorJitter(0.3, 0.2, 0.2, 0.05),
         transforms.RandomRotation(degrees=30),
         transforms.Normalize(mean=(0.4914, 0.4822, 0.4465),  std=(0.247, 0.243, 0.261))
     ])
@@ -28,7 +23,7 @@ test_transform = transforms.Compose([
 
 
 # How many pictures are analyzed in one iteration
-batch_size = 128
+batch_size = 256
 
 # Defining datasets and dataloaders for train and test data
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
@@ -47,18 +42,19 @@ classes = ('plane', 'car', 'bird', 'cat',
 
 
 
-znet = ZuziaNet()
+znet = ZuziaNet2()
 
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(znet.parameters(), lr=0.001, momentum=0.9)
+optimizer = optim.Adam(znet.parameters(), lr=0.001)
+# optimizer = optim.SGD(znet.parameters(), lr=0.001, momentum=0.9)
 
 train_loss = []
 eval_loss = []
 metrics = []
 epochs = []
 
-for epoch in range(20):
+for epoch in range(50):
     tloss = train_epoch(znet, criterion, optimizer, trainloader, epoch)
     eloss, classification_report = eval(znet, criterion, testloader)
 
@@ -71,7 +67,7 @@ print(train_loss)
 print(eval_loss)
 print(metrics)
 
-# Wykres z dwoma zmiennymi jako punkty
+
 plt.plot(epochs, train_loss, label='Training loss')
 plt.plot(epochs, eval_loss, label='Evaluation loss')
 
@@ -81,7 +77,7 @@ plt.ylabel('Loss')
 
 plt.legend()
 
-plt.savefig('zuzianet_20epochsSGD_128b.png')
+plt.savefig('zuzianet2_50epochs_adam_256b.png')
 plt.show()
 
 accuracy = [report[0] for report in metrics]
@@ -99,5 +95,7 @@ plt.ylabel('Metrics')
 
 plt.legend()
 
-plt.savefig('zuzianet_20epochs_SGD_128b_metrics.png')
+plt.savefig('zuzianet2_50epochs_adam_256b_metrics.png')
 plt.show()
+
+print(f'batch {batch_size}')
