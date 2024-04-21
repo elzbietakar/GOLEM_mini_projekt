@@ -14,6 +14,9 @@ def eval(model, criterion, loader):
     with torch.no_grad():
         for data in loader:
             images, labels = data
+            if torch.cuda.is_available():
+                images = images.cuda()
+                labels = labels.cuda()
             # calculate outputs by running images through the network
             outputs = model(images)
             loss = criterion(outputs, labels)

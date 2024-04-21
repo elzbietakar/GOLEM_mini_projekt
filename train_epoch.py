@@ -1,3 +1,4 @@
+import torch
 
 def train_epoch(model, criterion, optimizer, loader, id):
     running_loss = 0.0
@@ -6,6 +7,9 @@ def train_epoch(model, criterion, optimizer, loader, id):
     for i, data in enumerate(loader, 0):
         inputs, labels = data
 
+        if torch.cuda.is_available():
+            inputs = inputs.cuda()
+            labels = labels.cuda()
         model.train()
 
         # zero the parameter gradients

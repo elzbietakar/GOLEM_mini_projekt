@@ -9,6 +9,7 @@ from model1 import ZuziaNet
 from model2 import ZuziaNet2
 from model3 import ZuziaNet3
 import matplotlib.pyplot as plt
+import os
 
 train_transform = transforms.Compose([
         transforms.ToTensor(),
@@ -44,6 +45,9 @@ classes = ('plane', 'car', 'bird', 'cat',
 
 znet = ZuziaNet2()
 
+if torch.cuda.is_available():
+    znet.cuda()
+
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(znet.parameters(), lr=0.001)
@@ -54,7 +58,7 @@ eval_loss = []
 metrics = []
 epochs = []
 
-for epoch in range(50):
+for epoch in range(5):
     tloss = train_epoch(znet, criterion, optimizer, trainloader, epoch)
     eloss, classification_report = eval(znet, criterion, testloader)
 
@@ -67,6 +71,9 @@ print(train_loss)
 print(eval_loss)
 print(metrics)
 
+PATH = "znet2_2epoch_Adam_256b"
+if not os.path.exists(PATH):
+    os.makedirs(PATH)
 
 plt.plot(epochs, train_loss, label='Training loss')
 plt.plot(epochs, eval_loss, label='Evaluation loss')
@@ -77,7 +84,7 @@ plt.ylabel('Loss')
 
 plt.legend()
 
-plt.savefig('zuzianet2_50epochs_adam_256b.png')
+plt.savefig(f"{PATH}\plot_loss.png")
 plt.show()
 
 accuracy = [report[0] for report in metrics]
@@ -95,7 +102,8 @@ plt.ylabel('Metrics')
 
 plt.legend()
 
-plt.savefig('zuzianet2_50epochs_adam_256b_metrics.png')
+plt.savefig(f"{PATH}\plot_metrics.png")
 plt.show()
 
-print(f'batch {batch_size}')
+#Saves model
+torch.save(znet.state_dict(),(f"{PATH}\model.pth"))
