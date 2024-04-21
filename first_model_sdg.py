@@ -58,7 +58,8 @@ eval_loss = []
 metrics = []
 epochs = []
 
-for epoch in range(5):
+how_many_epoch = 2
+for epoch in range(how_many_epoch):
     tloss = train_epoch(znet, criterion, optimizer, trainloader, epoch)
     eloss, classification_report = eval(znet, criterion, testloader)
 
@@ -71,7 +72,7 @@ print(train_loss)
 print(eval_loss)
 print(metrics)
 
-PATH = "znet2_2epoch_Adam_256b"
+PATH = f"znet2_{how_many_epoch}epoch_Adam_{batch_size}"
 if not os.path.exists(PATH):
     os.makedirs(PATH)
 
