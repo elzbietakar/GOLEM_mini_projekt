@@ -58,7 +58,7 @@ eval_loss = []
 metrics = []
 epochs = []
 
-how_many_epoch = 2
+how_many_epoch = 50
 for epoch in range(how_many_epoch):
     tloss = train_epoch(znet, criterion, optimizer, trainloader, epoch)
     eloss, classification_report = eval(znet, criterion, testloader)
