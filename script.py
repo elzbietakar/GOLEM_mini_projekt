@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.optim as optim
 from train_epoch import train_epoch
 from model1 import ZuziaNet
-from model2 import ZuziaNet2
+from model2_v4 import ZuziaNet2
 from model3 import ZuziaNet3
 import matplotlib.pyplot as plt
 import os
@@ -58,7 +58,7 @@ eval_loss = []
 metrics = []
 epochs = []
 
-how_many_epoch = 50
+how_many_epoch = 2
 for epoch in range(how_many_epoch):
     tloss = train_epoch(znet, criterion, optimizer, trainloader, epoch)
     eloss, classification_report = eval(znet, criterion, testloader)
@@ -72,7 +72,7 @@ print(train_loss)
 print(eval_loss)
 print(metrics)
 
-PATH = f"znet2_{how_many_epoch}epoch_Adam_{batch_size}"
+PATH = f"znet2_v4_{how_many_epoch}epoch_Adam_{batch_size}"
 if not os.path.exists(PATH):
     os.makedirs(PATH)
 
@@ -89,18 +89,12 @@ plt.savefig(f"{PATH}\plot_loss.png")
 plt.show()
 
 accuracy = [report[0] for report in metrics]
-precision = [report[1] for report in metrics]
-recall = [report[2] for report in metrics]
-f1 = [report[3] for report in metrics]
 plt.plot(epochs, accuracy, label='Accuracy')
-plt.plot(epochs, precision, label='Precision')
-plt.plot(epochs, recall, label='Recall')
-plt.plot(epochs, f1, label='F1 score')
 
-plt.title('Plot compares accuracy, precision, recall, f1 on every epoch')
+plt.title('Validation accuracy')
 plt.xlabel('Epochs')
 plt.ylabel('Metrics')
-
+plt.grid(True)
 plt.legend()
 
 plt.savefig(f"{PATH}\plot_metrics.png")
