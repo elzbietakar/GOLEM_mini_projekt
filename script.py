@@ -6,8 +6,6 @@ import torch.nn as nn
 import torch.optim as optim
 from train_epoch import train_epoch
 from big_model_with_dropout import ZuziaNet
-from model2_v3 import ZuziaNet2
-from model3 import ZuziaNet3
 import matplotlib.pyplot as plt
 import os
 
@@ -52,7 +50,7 @@ classes = ('plane', 'car', 'bird', 'cat',
 
 
 
-znet = ZuziaNet2()
+znet = ZuziaNet()
 
 if torch.cuda.is_available():
     znet.cuda()
