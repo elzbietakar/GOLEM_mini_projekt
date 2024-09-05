@@ -8,28 +8,18 @@ class ResNet(nn.Module):
         
         self.resnet18 = models.resnet18(weights='IMAGENET1K_V1')
         
-        # Zmiana pierwszej warstwy
+        # changing first layer to match size of input pictures (32x32)
         self.resnet18.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=1, padding=3, bias=False)
         
+        # freezing all paramets except conv1 and bn1
         for name, param in self.resnet18.named_parameters():
-            if 'conv1' in name or 'bn1' in name:
-                param.requires_grad = True
-            else:
+            if 'conv1' not in name and 'bn1' not in name:
                 param.requires_grad = False
            
-        
-        for param in self.resnet18.fc.parameters():
-            param.requires_grad = True  
-        
-
-        # Zmiana liczby klas
+        # updating the last linear layer
         self.resnet18.fc = nn.Linear(512, 10)
         
     def forward(self, x):
         return self.resnet18(x)
 
-resnet = ResNet()
 
-input_data = torch.randn(1, 3, 32, 32) 
-output = resnet(input_data)
-print(output.shape)
