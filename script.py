@@ -20,9 +20,6 @@ train_transform = transforms.Compose([
         transforms.Normalize(mean=(0.4914, 0.4822, 0.4465),  std=(0.247, 0.243, 0.261))
     ])
 
-#transforms.RandomHorizontalFlip(p=0.4),
-# transforms.RandomRotation(degrees=30),
-
 test_transform = transforms.Compose([
         transforms.Resize(224),
         transforms.ToTensor(),

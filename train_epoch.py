@@ -25,7 +25,7 @@ def train_epoch(model, criterion, optimizer, loader, id):
         running_loss += loss.item()
         mean_loss += loss.item()
         counter += 1
-        if i % 100 == 99:    # print every 2000 mini-batches
+        if i % 100 == 99:    # print every 100 mini-batches
             print(f'[{id + 1}, {i + 1:5d}] loss: {running_loss / 100:.3f}')
             running_loss = 0.0
 

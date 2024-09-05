@@ -27,7 +27,7 @@ def eval(model, criterion, loader):
             y_pred.extend(predicted.tolist())
             counter += 1
     accuracy = accuracy_score(y_true, y_pred)
-    print(f'Accuracy of the network on the 10000 test images: {accuracy*100:.2f} %')
+    print(f'Accuracy of the network on the 100 test images: {accuracy*100:.2f} %')
     recall = recall_score(y_true, y_pred, average='macro')
     precision = precision_score(y_true, y_pred, average='macro', zero_division=np.nan)
     f1 = f1_score(y_true, y_pred, average='macro')
