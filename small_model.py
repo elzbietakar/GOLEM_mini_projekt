@@ -27,4 +27,4 @@ class OlaNet4(nn.Module):
 
 model = OlaNet4()
 total_params = sum(p.numel() for p in model.parameters())
-print("Liczba parametrów w modelu:", total_params)
+print("Liczba parametrów w modelu: ", total_params)
