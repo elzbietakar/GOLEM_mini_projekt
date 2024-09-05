@@ -5,19 +5,28 @@ from eval import eval
 import torch.nn as nn
 import torch.optim as optim
 from train_epoch import train_epoch
-from model1 import ZuziaNet
-from model2_v4 import ZuziaNet2
+from big_model_with_dropout import ZuziaNet
+from model2_v3 import ZuziaNet2
 from model3 import ZuziaNet3
 import matplotlib.pyplot as plt
 import os
 
 train_transform = transforms.Compose([
+        transforms.Resize(224),
+        transforms.RandomRotation(20),
+        transforms.RandomHorizontalFlip(0.1),
+        transforms.ColorJitter(brightness = 0.1,contrast = 0.1 ,saturation =0.1 ),
+        transforms.RandomAdjustSharpness(sharpness_factor = 2, p = 0.1),
         transforms.ToTensor(),
-        transforms.RandomHorizontalFlip(p=0.4),
-        transforms.RandomRotation(degrees=30),
+        transforms.RandomErasing(p=0.75,scale=(0.02, 0.1),value=1.0, inplace=False),
         transforms.Normalize(mean=(0.4914, 0.4822, 0.4465),  std=(0.247, 0.243, 0.261))
     ])
+
+#transforms.RandomHorizontalFlip(p=0.4),
+# transforms.RandomRotation(degrees=30),
+
 test_transform = transforms.Compose([
+        transforms.Resize(224),
         transforms.ToTensor(),
         transforms.Normalize(mean=(0.4914, 0.4822, 0.4465),  std=(0.247, 0.243, 0.261))
     ])
@@ -58,7 +67,7 @@ eval_loss = []
 metrics = []
 epochs = []
 
-how_many_epoch = 2
+how_many_epoch = 50
 for epoch in range(how_many_epoch):
     tloss = train_epoch(znet, criterion, optimizer, trainloader, epoch)
     eloss, classification_report = eval(znet, criterion, testloader)
@@ -72,7 +81,7 @@ print(train_loss)
 print(eval_loss)
 print(metrics)
 
-PATH = f"znet2_v4_{how_many_epoch}epoch_Adam_{batch_size}"
+PATH = f"zresnet_fine_tuning_224_{how_many_epoch}epoch_SGD_{batch_size}"
 if not os.path.exists(PATH):
     os.makedirs(PATH)
 
