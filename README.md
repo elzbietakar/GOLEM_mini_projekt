@@ -1,5 +1,6 @@
 # **Image Classification using our own neural network model and Transfer Learning Repository**
 
+This project was created by Zuzanna Waszczuk, Aleksandra Szczypawka and Ela Karasińska as our first project in the artificial intelligence science club, "GOLEM." A big thank you to our mentor, Wojtek Łapacz, for his advice and knowledge.
 This repository contains various **experiments** and **scripts** used to train and fine-tune models. It includes comparisons of different architectures, optimizers, and training strategies. Each folder contains saved model, plots with loss, acurracy and performance comparison results. 
 
 Detailed **presentation of our project**, including plots and descriptions.
