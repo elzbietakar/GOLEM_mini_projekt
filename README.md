@@ -3,9 +3,10 @@
 This repository contains various **experiments** and **scripts** used to train and fine-tune models. It includes comparisons of different architectures, optimizers, and training strategies. Each folder contains saved model, plots with loss, acurracy and performance comparison results. 
 
 Detailed **presentation of our project**, including plots and descriptions.
-[here in english](https://www.canva.com/design/DAGP7cwss4Q/iwJalHHFrlgvEFytPdbOUw/view?utm_content=DAGP7cwss4Q&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
-[here in polish](https://www.canva.com/design/DAGCnfvyrGs/Cd4GIMKMWnXS3HWC1JVJyA/view?utm_content=DAGCnfvyrGs&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+[presentation in english](https://www.canva.com/design/DAGP7cwss4Q/iwJalHHFrlgvEFytPdbOUw/view?utm_content=DAGP7cwss4Q&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+
+[presentation in polish](https://www.canva.com/design/DAGCnfvyrGs/Cd4GIMKMWnXS3HWC1JVJyA/view?utm_content=DAGCnfvyrGs&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
 
 ### **Python Script Files**
