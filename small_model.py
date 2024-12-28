@@ -23,8 +23,3 @@ class OlaNet4(nn.Module):
         x = torch.flatten(x, 1)
         x = self.fc1(x)
         return x
-
-
-model = OlaNet4()
-total_params = sum(p.numel() for p in model.parameters())
-print("Liczba parametrów w modelu: ", total_params)
